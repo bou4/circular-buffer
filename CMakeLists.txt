@@ -3,4 +3,4 @@ project(circular_buffer C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(circular_buffer main.c circular_buffer.c)
+add_executable(circular_buffer circular_buffer_test.c circular_buffer.c)

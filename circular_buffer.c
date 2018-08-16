@@ -1,49 +1,56 @@
 #include "circular_buffer.h"
 
 
-void circular_buffer_push_element(circular_buffer_t *buffer, uint8_t element)
+bool circular_buffer_push_element(circular_buffer_t *buffer, uint8_t element)
 {
     if (circular_buffer_is_full(buffer))
     {
         circular_buffer_overrun_callback(buffer);
 
-        return;
+        return true;
     }
 
     buffer->elements[buffer->head_index] = element;
 
     buffer->head_index = (circular_buffer_size_t) ((buffer->head_index + 1) & CIRCULAR_BUFFER_MASK);
+
+    return false;
 }
 
-void circular_buffer_push_elements(circular_buffer_t *buffer, uint8_t *elements, circular_buffer_size_t element_count)
+bool circular_buffer_push_elements(circular_buffer_t *buffer, uint8_t *elements, circular_buffer_size_t element_count)
 {
     for (circular_buffer_size_t element_index = 0; element_index < element_count; element_index++)
     {
-        circular_buffer_push_element(buffer, elements[element_index]);
+        if (circular_buffer_push_element(buffer, elements[element_index]) == true)
+        {
+            return true;
+        }
     }
+
+    return false;
 }
 
-uint8_t circular_buffer_pop_element(circular_buffer_t *buffer, uint8_t *element)
+bool circular_buffer_pop_element(circular_buffer_t *buffer, uint8_t *element)
 {
     if (circular_buffer_is_empty(buffer))
     {
         circular_buffer_underrun_callback(buffer);
 
-        return 0;
+        return true;
     }
 
     *element = buffer->elements[buffer->tail_index];
 
     buffer->tail_index = (circular_buffer_size_t) ((buffer->tail_index + 1) & CIRCULAR_BUFFER_MASK);
 
-    return 1;
+    return false;
 }
 
-uint8_t circular_buffer_pop_elements(circular_buffer_t *buffer, uint8_t *elements, circular_buffer_size_t maximal_element_count)
+circular_buffer_size_t circular_buffer_pop_elements(circular_buffer_t *buffer, uint8_t *elements, circular_buffer_size_t maximal_element_count)
 {
     for (circular_buffer_size_t element_index = 0; element_index < maximal_element_count; element_index++)
     {
-        if (circular_buffer_pop_element(buffer, &(elements[element_index])) == 0)
+        if (circular_buffer_pop_element(buffer, &(elements[element_index])) == true)
         {
             return element_index;
         }
