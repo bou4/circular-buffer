@@ -1,7 +1,9 @@
 #ifndef CIRCULAR_BUFFER_H
 #define CIRCULAR_BUFFER_H
 
+#include <stdbool.h>
 #include <stdint.h>
+
 
 #define CIRCULAR_BUFFER_SIZE 128
 #define CIRCULAR_BUFFER_MASK (CIRCULAR_BUFFER_SIZE - 1)
@@ -20,14 +22,14 @@ typedef struct circular_buffer
     circular_buffer_size_t tail_index;
 } circular_buffer_t;
 
-inline uint8_t circular_buffer_is_empty(circular_buffer_t *buffer)
-{
-    return (buffer->head_index == buffer->tail_index);
-}
-
-inline uint8_t circular_buffer_is_full(circular_buffer_t *buffer)
+inline bool circular_buffer_is_full(circular_buffer_t *buffer)
 {
     return ((buffer->head_index - buffer->tail_index) & CIRCULAR_BUFFER_MASK) == CIRCULAR_BUFFER_MASK;
+}
+
+inline bool circular_buffer_is_empty(circular_buffer_t *buffer)
+{
+    return (buffer->head_index == buffer->tail_index);
 }
 
 void circular_buffer_push_element(circular_buffer_t *buffer, uint8_t element);
