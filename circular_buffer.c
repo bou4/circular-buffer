@@ -39,7 +39,7 @@ circular_buffer_size_t circular_buffer_push_elements(circular_buffer_t *buffer, 
 
     for (element_index = 0; element_index < element_count; element_index++)
     {
-        if (circular_buffer_push_element(buffer, elements[element_index]) == CIRCULAR_BUFFER_STATUS_ERROR)
+        if (circular_buffer_push_element(buffer, elements[element_index]) != CIRCULAR_BUFFER_STATUS_OK)
         {
             break;
         }
@@ -54,7 +54,7 @@ circular_buffer_size_t circular_buffer_pop_elements(circular_buffer_t *buffer, u
 
     for (element_index = 0; element_index < maximal_element_count; element_index++)
     {
-        if (circular_buffer_pop_element(buffer, &(elements[element_index])) == CIRCULAR_BUFFER_STATUS_ERROR)
+        if (circular_buffer_pop_element(buffer, &(elements[element_index])) != CIRCULAR_BUFFER_STATUS_OK)
         {
             break;
         }
