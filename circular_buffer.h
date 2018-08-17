@@ -22,6 +22,12 @@ typedef struct circular_buffer
     circular_buffer_size_t tail_index;
 } circular_buffer_t;
 
+typedef enum circular_buffer_status
+{
+    CIRCULAR_BUFFER_STATUS_OK,
+    CIRCULAR_BUFFER_STATUS_ERROR
+} circular_buffer_status_t;
+
 inline bool circular_buffer_is_full(circular_buffer_t *buffer)
 {
     return ((buffer->head_index - buffer->tail_index) & CIRCULAR_BUFFER_MASK) == CIRCULAR_BUFFER_MASK;
@@ -32,10 +38,10 @@ inline bool circular_buffer_is_empty(circular_buffer_t *buffer)
     return (buffer->head_index == buffer->tail_index);
 }
 
-bool circular_buffer_push_element(circular_buffer_t *buffer, uint8_t element);
-bool circular_buffer_push_elements(circular_buffer_t *buffer, uint8_t *elements, circular_buffer_size_t element_count);
+circular_buffer_status_t circular_buffer_push_element(circular_buffer_t *buffer, uint8_t element);
+circular_buffer_status_t circular_buffer_pop_element(circular_buffer_t *buffer, uint8_t *element);
 
-bool circular_buffer_pop_element(circular_buffer_t *buffer, uint8_t *element);
+circular_buffer_size_t circular_buffer_push_elements(circular_buffer_t *buffer, uint8_t *elements, circular_buffer_size_t element_count);
 circular_buffer_size_t circular_buffer_pop_elements(circular_buffer_t *buffer, uint8_t *elements, circular_buffer_size_t maximal_element_count);
 
 void circular_buffer_overrun_callback(circular_buffer_t *buffer);
