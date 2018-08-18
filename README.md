@@ -1,1 +1,1 @@
-# Circular Buffer
+# Ring Buffer
