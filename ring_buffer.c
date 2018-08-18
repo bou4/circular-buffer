@@ -1,11 +1,11 @@
 #include "ring_buffer.h"
 
 
-ring_buffer_status_t ring_buffer_push_element(ring_buffer_t *buffer, uint8_t element)
+ring_buffer_status_t ring_buffer_push(ring_buffer_t *buffer, uint8_t element)
 {
     if (ring_buffer_is_full(buffer))
     {
-        ring_buffer_overrun_callback(buffer);
+        ring_buffer_overrun_cb(buffer);
 
         return RING_BUFFER_STATUS_ERROR;
     }
@@ -17,11 +17,11 @@ ring_buffer_status_t ring_buffer_push_element(ring_buffer_t *buffer, uint8_t ele
     return RING_BUFFER_STATUS_OK;
 }
 
-ring_buffer_status_t ring_buffer_pop_element(ring_buffer_t *buffer, uint8_t *element)
+ring_buffer_status_t ring_buffer_pop(ring_buffer_t *buffer, uint8_t *element)
 {
     if (ring_buffer_is_empty(buffer))
     {
-        ring_buffer_underrun_callback(buffer);
+        ring_buffer_underrun_cb(buffer);
 
         return RING_BUFFER_STATUS_ERROR;
     }
@@ -33,42 +33,42 @@ ring_buffer_status_t ring_buffer_pop_element(ring_buffer_t *buffer, uint8_t *ele
     return RING_BUFFER_STATUS_OK;
 }
 
-ring_buffer_size_t ring_buffer_push_elements(ring_buffer_t *buffer, uint8_t *elements, ring_buffer_size_t element_count)
+ring_buffer_size_t ring_buffer_push_array(ring_buffer_t *buffer, uint8_t *elements, ring_buffer_size_t size)
 {
-    ring_buffer_size_t element_index;
+    ring_buffer_size_t index;
 
-    for (element_index = 0; element_index < element_count; element_index++)
+    for (index = 0; index < size; index++)
     {
-        if (ring_buffer_push_element(buffer, elements[element_index]) != RING_BUFFER_STATUS_OK)
+        if (ring_buffer_push(buffer, elements[index]) != RING_BUFFER_STATUS_OK)
         {
             break;
         }
     }
 
-    return element_index;
+    return index;
 }
 
-ring_buffer_size_t ring_buffer_pop_elements(ring_buffer_t *buffer, uint8_t *elements, ring_buffer_size_t maximal_element_count)
+ring_buffer_size_t ring_buffer_pop_array(ring_buffer_t *buffer, uint8_t *elements, ring_buffer_size_t size)
 {
-    ring_buffer_size_t element_index;
+    ring_buffer_size_t index;
 
-    for (element_index = 0; element_index < maximal_element_count; element_index++)
+    for (index = 0; index < size; index++)
     {
-        if (ring_buffer_pop_element(buffer, &(elements[element_index])) != RING_BUFFER_STATUS_OK)
+        if (ring_buffer_pop(buffer, &(elements[index])) != RING_BUFFER_STATUS_OK)
         {
             break;
         }
     }
 
-    return element_index;
+    return index;
 }
 
-__attribute__((weak)) void ring_buffer_overrun_callback(ring_buffer_t *buffer)
+__attribute__((weak)) void ring_buffer_overrun_cb(ring_buffer_t *buffer)
 {
 
 }
 
-__attribute__((weak)) void ring_buffer_underrun_callback(ring_buffer_t *buffer)
+__attribute__((weak)) void ring_buffer_underrun_cb(ring_buffer_t *buffer)
 {
 
 }

@@ -38,13 +38,13 @@ inline bool ring_buffer_is_empty(ring_buffer_t *buffer)
     return (buffer->head_index == buffer->tail_index);
 }
 
-ring_buffer_status_t ring_buffer_push_element(ring_buffer_t *buffer, uint8_t element);
-ring_buffer_status_t ring_buffer_pop_element(ring_buffer_t *buffer, uint8_t *element);
+ring_buffer_status_t ring_buffer_push(ring_buffer_t *buffer, uint8_t element);
+ring_buffer_status_t ring_buffer_pop(ring_buffer_t *buffer, uint8_t *element);
 
-ring_buffer_size_t ring_buffer_push_elements(ring_buffer_t *buffer, uint8_t *elements, ring_buffer_size_t element_count);
-ring_buffer_size_t ring_buffer_pop_elements(ring_buffer_t *buffer, uint8_t *elements, ring_buffer_size_t maximal_element_count);
+ring_buffer_size_t ring_buffer_push_array(ring_buffer_t *buffer, uint8_t *elements, ring_buffer_size_t size);
+ring_buffer_size_t ring_buffer_pop_array(ring_buffer_t *buffer, uint8_t *elements, ring_buffer_size_t size);
 
-void ring_buffer_overrun_callback(ring_buffer_t *buffer);
-void ring_buffer_underrun_callback(ring_buffer_t *buffer);
+void ring_buffer_overrun_cb(ring_buffer_t *buffer);
+void ring_buffer_underrun_cb(ring_buffer_t *buffer);
 
 #endif /* RING_BUFFER_H */

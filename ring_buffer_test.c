@@ -46,8 +46,8 @@ void ring_buffer_test_push_pop_element()
     uint8_t element1 = 1;
     uint8_t element2 = 0;
 
-    ring_buffer_status_t push_status = ring_buffer_push_element(&ring_buffer, element1);
-    ring_buffer_status_t pop_status = ring_buffer_pop_element(&ring_buffer, &element2);
+    ring_buffer_status_t push_status = ring_buffer_push(&ring_buffer, element1);
+    ring_buffer_status_t pop_status = ring_buffer_pop(&ring_buffer, &element2);
 
     if ((push_status != RING_BUFFER_STATUS_OK) || (pop_status != RING_BUFFER_STATUS_OK))
     {
@@ -77,8 +77,8 @@ void ring_buffer_test_push_pop_elements()
 
     ring_buffer_size_t element_count = 16;
 
-    ring_buffer_size_t element_count1 = ring_buffer_push_elements(&ring_buffer, elements1, element_count);
-    ring_buffer_size_t element_count2 = ring_buffer_pop_elements(&ring_buffer, elements2, element_count);
+    ring_buffer_size_t element_count1 = ring_buffer_push_array(&ring_buffer, elements1, element_count);
+    ring_buffer_size_t element_count2 = ring_buffer_pop_array(&ring_buffer, elements2, element_count);
 
     if ((element_count1 != element_count) || (element_count2 != element_count))
     {
@@ -109,7 +109,7 @@ void ring_buffer_test_overrun_callback()
     uint8_t elements[RING_BUFFER_SIZE + 2];
 
     ring_buffer_size_t element_count =
-        ring_buffer_push_elements(&ring_buffer, elements, RING_BUFFER_SIZE + 2);
+        ring_buffer_push_array(&ring_buffer, elements, RING_BUFFER_SIZE + 2);
 
     if ((element_count != RING_BUFFER_SIZE - 1) || (ring_buffer_overrun_callback_count != 1))
     {
@@ -130,7 +130,7 @@ void ring_buffer_test_underrun_callback()
     uint8_t elements[2];
 
     ring_buffer_size_t element_count =
-        ring_buffer_pop_elements(&ring_buffer, elements, 2);
+        ring_buffer_pop_array(&ring_buffer, elements, 2);
 
     if ((element_count != 0) || (ring_buffer_underrun_callback_count != 1))
     {
@@ -142,12 +142,12 @@ void ring_buffer_test_underrun_callback()
     ring_buffer_test_success(identifier);
 }
 
-void ring_buffer_overrun_callback(ring_buffer_t *buffer)
+void ring_buffer_overrun_cb(ring_buffer_t *buffer)
 {
     ring_buffer_overrun_callback_count++;
 }
 
-void ring_buffer_underrun_callback(ring_buffer_t *buffer)
+void ring_buffer_underrun_cb(ring_buffer_t *buffer)
 {
     ring_buffer_underrun_callback_count++;
 }
