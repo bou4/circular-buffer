@@ -3,4 +3,6 @@ project(ring_buffer C)
 
 set(CMAKE_C_STANDARD 99)
 
+add_compile_options(-Wall -Wextra -Wpedantic)
+
 add_executable(ring_buffer ring_buffer_test.c ring_buffer.c)
