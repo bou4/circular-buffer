@@ -1,6 +1,5 @@
 #include "ring_buffer.h"
 
-
 ring_buffer_status_t ring_buffer_push(ring_buffer_t *buffer, uint8_t element)
 {
     if (ring_buffer_is_full(buffer))

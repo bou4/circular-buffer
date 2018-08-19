@@ -4,7 +4,6 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-
 #define RING_BUFFER_SIZE 128
 #define RING_BUFFER_MASK (RING_BUFFER_SIZE - 1)
 
