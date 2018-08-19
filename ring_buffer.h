@@ -46,4 +46,6 @@ ring_buffer_size_t ring_buffer_pop_array(ring_buffer_t *buffer, uint8_t *element
 void ring_buffer_overrun_cb(ring_buffer_t *buffer);
 void ring_buffer_underrun_cb(ring_buffer_t *buffer);
 
+#define UNUSED(x) (void) (x)
+
 #endif /* RING_BUFFER_H */

@@ -144,11 +144,15 @@ void ring_buffer_test_underrun_callback()
 
 void ring_buffer_overrun_cb(ring_buffer_t *buffer)
 {
+    UNUSED(buffer);
+
     ring_buffer_overrun_callback_count++;
 }
 
 void ring_buffer_underrun_cb(ring_buffer_t *buffer)
 {
+    UNUSED(buffer);
+
     ring_buffer_underrun_callback_count++;
 }
 

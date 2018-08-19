@@ -64,12 +64,12 @@ ring_buffer_size_t ring_buffer_pop_array(ring_buffer_t *buffer, uint8_t *element
 
 __attribute__((weak)) void ring_buffer_overrun_cb(ring_buffer_t *buffer)
 {
-
+    UNUSED(buffer);
 }
 
 __attribute__((weak)) void ring_buffer_underrun_cb(ring_buffer_t *buffer)
 {
-
+    UNUSED(buffer);
 }
 
 extern inline bool ring_buffer_is_full(ring_buffer_t *buffer);
