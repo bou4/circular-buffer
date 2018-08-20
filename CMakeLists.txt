@@ -5,4 +5,6 @@ set(CMAKE_C_STANDARD 99)
 
 add_compile_options(-Wall -Wextra -Wpedantic)
 
+include_directories("${CMAKE_SOURCE_DIR}/include")
+
 add_executable(ring_buffer src/ring_buffer_test.c src/ring_buffer.c)

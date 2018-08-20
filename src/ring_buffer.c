@@ -1,4 +1,7 @@
-#include "../include/ring_buffer.h"
+#include "ring_buffer.h"
+
+extern inline bool ring_buffer_is_full(ring_buffer_t *buffer);
+extern inline bool ring_buffer_is_empty(ring_buffer_t *buffer);
 
 ring_buffer_status_t ring_buffer_push(ring_buffer_t *buffer, uint8_t element)
 {
@@ -11,7 +14,7 @@ ring_buffer_status_t ring_buffer_push(ring_buffer_t *buffer, uint8_t element)
 
     buffer->elements[buffer->head_index] = element;
 
-    buffer->head_index = (ring_buffer_size_t) ((buffer->head_index + 1) & RING_BUFFER_MASK);
+    buffer->head_index = (ring_buffer_size_t) ((buffer->head_index + 1U) & RING_BUFFER_MASK);
 
     return RING_BUFFER_STATUS_OK;
 }
@@ -27,7 +30,7 @@ ring_buffer_status_t ring_buffer_pop(ring_buffer_t *buffer, uint8_t *element)
 
     *element = buffer->elements[buffer->tail_index];
 
-    buffer->tail_index = (ring_buffer_size_t) ((buffer->tail_index + 1) & RING_BUFFER_MASK);
+    buffer->tail_index = (ring_buffer_size_t) ((buffer->tail_index + 1U) & RING_BUFFER_MASK);
 
     return RING_BUFFER_STATUS_OK;
 }
@@ -71,6 +74,3 @@ __attribute__((weak)) void ring_buffer_underrun_cb(ring_buffer_t *buffer)
 {
     UNUSED(buffer);
 }
-
-extern inline bool ring_buffer_is_full(ring_buffer_t *buffer);
-extern inline bool ring_buffer_is_empty(ring_buffer_t *buffer);
