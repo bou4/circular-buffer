@@ -8,17 +8,10 @@ unsigned int ring_buffer_test_count;
 
 unsigned int ring_buffer_test_success_count;
 
-unsigned int ring_buffer_overrun_callback_count;
-
-unsigned int ring_buffer_underrun_callback_count;
-
 void ring_buffer_test_setup()
 {
     ring_buffer.head_index = 0;
     ring_buffer.tail_index = 0;
-
-    ring_buffer_overrun_callback_count = 0;
-    ring_buffer_underrun_callback_count = 0;
 }
 
 void ring_buffer_test_success(char *string)
@@ -99,68 +92,10 @@ void ring_buffer_test_push_pop_elements()
     ring_buffer_test_success(identifier);
 }
 
-void ring_buffer_test_overrun_callback()
-{
-    ring_buffer_test_setup();
-
-    char *identifier = "ring_buffer_test_overrun_callback";
-
-    uint8_t elements[RING_BUFFER_SIZE + 2];
-
-    ring_buffer_size_t element_count =
-        ring_buffer_push_array(&ring_buffer, elements, RING_BUFFER_SIZE + 2);
-
-    if ((element_count != RING_BUFFER_SIZE - 1) || (ring_buffer_overrun_callback_count != 1))
-    {
-        ring_buffer_test_fail(identifier);
-
-        return;
-    }
-
-    ring_buffer_test_success(identifier);
-}
-
-void ring_buffer_test_underrun_callback()
-{
-    ring_buffer_test_setup();
-
-    char *identifier = "ring_buffer_test_underrun_callback";
-
-    uint8_t elements[2];
-
-    ring_buffer_size_t element_count =
-        ring_buffer_pop_array(&ring_buffer, elements, 2);
-
-    if ((element_count != 0) || (ring_buffer_underrun_callback_count != 1))
-    {
-        ring_buffer_test_fail(identifier);
-
-        return;
-    }
-
-    ring_buffer_test_success(identifier);
-}
-
-void ring_buffer_overrun_cb(ring_buffer_t *buffer)
-{
-    UNUSED(buffer);
-
-    ring_buffer_overrun_callback_count++;
-}
-
-void ring_buffer_underrun_cb(ring_buffer_t *buffer)
-{
-    UNUSED(buffer);
-
-    ring_buffer_underrun_callback_count++;
-}
-
 int main()
 {
     ring_buffer_test_push_pop_element();
     ring_buffer_test_push_pop_elements();
-    ring_buffer_test_overrun_callback();
-    ring_buffer_test_underrun_callback();
 
     return 0;
 }
