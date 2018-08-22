@@ -28,6 +28,10 @@
 #ifndef RING_BUFFER_H
 #define RING_BUFFER_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -122,5 +126,9 @@ ring_buffer_size_t ring_buffer_push_array(ring_buffer_t *buffer, uint8_t *elemen
  * @return The number of elements removed.
  */
 ring_buffer_size_t ring_buffer_pop_array(ring_buffer_t *buffer, uint8_t *elements, ring_buffer_size_t size);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* RING_BUFFER_H */
