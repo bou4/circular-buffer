@@ -52,7 +52,7 @@ extern "C" {
 #endif
 
 /*!
- * \c ring_buffer_size_t is used to represent the size of the ring buffer.
+ * @c ring_buffer_size_t is used to represent the size of the ring buffer.
  * As an implication, @c ring_buffer_size_t can hold any ring buffer index.
  */
 typedef uint8_t ring_buffer_size_t;
