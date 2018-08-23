@@ -28,12 +28,12 @@
 #ifndef RING_BUFFER_H
 #define RING_BUFFER_H
 
+#include <stdbool.h>
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include <stdbool.h>
-#include <stdint.h>
 
 /*!
  * The ring buffer can only contain <tt>RING_BUFFER_SIZE - 1</tt> elements,
